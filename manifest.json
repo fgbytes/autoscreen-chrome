@@ -3,18 +3,25 @@
     "name": "fgbytes Auto Screenshot Saver",
     "version": "1.0",
     "permissions": [
-      "activeTab",
-      "downloads",
-      "storage"
+        "activeTab",
+        "downloads",
+        "storage",
+        "scripting"
     ],
     "host_permissions": [
-      "*://*/*"
+        "*://*/*"
     ],
     "background": {
-      "service_worker": "background.js"
+        "service_worker": "background.js"
     },
     "action": {
-      "default_popup": "popup.html",
-      "default_icon": "./icons/off.png"
-    }
-  }
+        "default_popup": "popup.html",
+        "default_icon": "./icons/off.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.js"]
+        }
+    ]
+}
