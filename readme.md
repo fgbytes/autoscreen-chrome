@@ -52,3 +52,7 @@ Feel free to fork the repository and submit pull requests for any enhancements y
 ## License
 
 This project is open source. Please check the repository for license details.
+
+## Support
+
+If you want to support the creator and get access to more tips and tricks, you can join the community at https://locals.club/today-i-learned-hxfy.
