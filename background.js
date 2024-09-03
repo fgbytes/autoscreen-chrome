@@ -2,13 +2,13 @@ let screenshotCount = {};
 
 // Listen for tab updates and take screenshots if enabled
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  console.log('Tab updated:', tabId, changeInfo, tab);
+//   console.log('Tab updated:', tabId, changeInfo, tab);
   if (changeInfo.status === 'complete') {
     chrome.storage.local.get(['screenshotsEnabled'], (result) => {
-      console.log('Screenshots enabled status:', result.screenshotsEnabled);
+    //   console.log('Screenshots enabled status:', result.screenshotsEnabled);
       if (result.screenshotsEnabled) {
         const url = tab.url;
-        console.log('Tab URL:', url);
+        // console.log('Tab URL:', url);
 
         // Check if the URL is defined and not a restricted one
         if (url && (url.startsWith('http://') || url.startsWith('https://'))) {

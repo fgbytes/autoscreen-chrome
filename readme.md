@@ -1,8 +1,9 @@
 # fgbytes Auto Screenshot Saver
-
-This Chrome extension automatically captures screenshots of web pages you visit and saves them to your computer.
+![Extension Screenshot](./readme-assets/image.png)
+This Chrome extension automatically captures sequences of screenshots of web pages you visit and saves them to your downloads folder.
 
 ## Installation
+
 
 To install this extension from GitHub:
 
@@ -10,7 +11,7 @@ To install this extension from GitHub:
    ```
    git clone https://github.com/fgbytes/autoscreen.git
    ```
-   Or download and extract the ZIP file from the GitHub repository.
+   Or download and extract the ZIP file from the Releases section. [Releases](https://github.com/fgbytes/autoscreen-chrome/releases)
 
 2. Open Google Chrome and navigate to `chrome://extensions/`
 
