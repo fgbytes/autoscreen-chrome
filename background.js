@@ -19,6 +19,9 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
           }, 300);
         } else {
           console.warn('Skipping screenshot for undefined or restricted URL:', url);
+
+        //   
+        //   updateIcon(false);
         }
       }
     });

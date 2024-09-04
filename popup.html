@@ -4,11 +4,63 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Screenshot Toggler</title>
+  <style>
+            body {
+            width: 300px;
+            padding: 20px;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f515;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 16px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        #toggle-screenshots {
+            background-color: #4285f4;
+        }
+        #toggle-screenshots.enabled {
+            background-color: #d23f31 !important;
+        }
+        #take-screenshot {
+            background-color: #0f9d58;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        button:active {
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            transform: translateY(1px);
+        }
+        .footer-text {
+            font-size: 12px;
+            color: #555;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .footer-text a {
+            color: #4285f4;
+            text-decoration: none;
+        }
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+  </style>
 </head>
 <body>
   <button id="toggle-screenshots">Loading...</button>
   <button id="take-screenshot">Take Manual Screenshot</button>
   <!-- <button id="take-full-height-screenshot">Take Full-Height Screenshot</button> -->
+  <div class="footer-text">
+    Auto screenshotter by fgbytes, more tools/tips <a href="https://locals.club/today-i-learned-hxfy" target="_blank">here</a>
+  </div>
   <script src="popup.js"></script>
 </body>
 </html>
