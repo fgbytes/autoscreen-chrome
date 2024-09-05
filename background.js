@@ -2,30 +2,23 @@ let screenshotCount = {};
 
 // Listen for tab updates and take screenshots if enabled
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-//   console.log('Tab updated:', tabId, changeInfo, tab);
-  if (changeInfo.status === 'complete') {
-    chrome.storage.local.get(['screenshotsEnabled'], (result) => {
-    //   console.log('Screenshots enabled status:', result.screenshotsEnabled);
-      if (result.screenshotsEnabled) {
-        const url = tab.url;
-        // console.log('Tab URL:', url);
+    if (changeInfo.status === 'complete') {
+        chrome.storage.local.get(['screenshotsEnabled', 'waitTime'], (result) => {
+            if (result.screenshotsEnabled) {
+                const url = tab.url;
+                const waitTime = result.waitTime !== undefined ? result.waitTime : 300; // Default to 300 ms
 
-        // Check if the URL is defined and not a restricted one
-        if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
-          // Add a 300ms delay before taking the screenshot
-          setTimeout(() => {
-            console.log('Taking screenshot for URL:', url);
-            takeScreenshot(tab.windowId, url);
-          }, 300);
-        } else {
-          console.warn('Skipping screenshot for undefined or restricted URL:', url);
-
-        //   
-        //   updateIcon(false);
-        }
-      }
-    });
-  }
+                if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+                    setTimeout(() => {
+                        console.log('Taking screenshot for URL:', url);
+                        takeScreenshot(tab.windowId, url);
+                    }, waitTime);
+                } else {
+                    console.warn('Skipping screenshot for undefined or restricted URL:', url);
+                }
+            }
+        });
+    }
 });
 
 // Function to take a screenshot
