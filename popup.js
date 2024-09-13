@@ -165,4 +165,24 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     });
+
+    function takeScreenshot() {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            const activeTab = tabs[0];
+            chrome.runtime.sendMessage({ action: "takeScreenshot", tabId: activeTab.id, url: activeTab.url }, (response) => {
+                if (chrome.runtime.lastError) {
+                    console.error('Error sending message:', chrome.runtime.lastError);
+                } else if (response && response.status === "success") {
+                    console.log('Screenshot taken successfully.');
+                    takeScreenshotButton.textContent = 'Screenshot Taken!';
+                    // Reset button text after 2 seconds
+                    setTimeout(() => {
+                        takeScreenshotButton.textContent = 'Take Screenshot';
+                    }, 2000);
+                } else {
+                    console.warn('Unexpected response:', response);
+                }
+            });
+        });
+    }
 })

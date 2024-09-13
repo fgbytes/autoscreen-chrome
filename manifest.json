@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "fgbytes Auto Screenshot Saver",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "permissions": [
         "activeTab",
         "downloads",
@@ -15,5 +15,13 @@
     "action": {
         "default_popup": "popup.html",
         "default_icon": "./icons/off.png"
+    },
+    "commands": {
+        "take_manual_screenshot": {
+            "suggested_key": {
+                "default": "Alt+K"
+            },
+            "description": "Take Manual Screenshot"
+        }
     }
 }

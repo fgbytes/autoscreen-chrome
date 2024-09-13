@@ -94,40 +94,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       }
     });
     return true; // Indicates that the response is sent asynchronously
-  } else if (message.action === "takeFullHeightScreenshot") {
-    chrome.tabs.get(message.tabId, (tab) => {
-      if (chrome.runtime.lastError || !tab || tab.url.startsWith('chrome://')) {
-        console.error('Cannot inject content script into restricted URL:', tab ? tab.url : 'unknown');
-        sendResponse({ status: "error", message: "Cannot inject content script into restricted URL" });
-      } else {
-        chrome.scripting.executeScript(
-          {
-            target: { tabId: message.tabId },
-            files: ['content.js']
-          },
-          () => {
-            if (chrome.runtime.lastError) {
-              console.error('Failed to inject content script:', chrome.runtime.lastError.message);
-              sendResponse({ status: "error", message: "Failed to inject content script" });
-            } else {
-              chrome.tabs.sendMessage(message.tabId, { action: "getFullHeightScreenshot" }, (response) => {
-                if (chrome.runtime.lastError || !response || !response.dataUrl) {
-                  console.error('Failed to capture full-height screenshot:', chrome.runtime.lastError ? chrome.runtime.lastError.message : 'Unknown error');
-                  sendResponse({ status: "error", message: "Failed to capture full-height screenshot" });
-                } else {
-                  const url = message.url;
-                  const domain = new URL(url).hostname;
-                  console.log('Taking full-height screenshot for URL:', url);
-                  saveScreenshot(response.dataUrl, domain, url);
-                  sendResponse({ status: "success" });
-                }
-              });
-            }
-          }
-        );
-      }
-    });
-    return true; // Indicates that the response is sent asynchronously
   }
 });
 
@@ -160,4 +126,27 @@ chrome.storage.local.get(['screenshotsEnabled'], (result) => {
   const isEnabled = result.screenshotsEnabled !== undefined ? result.screenshotsEnabled : false;
   console.log('Initializing icon state. Screenshots enabled:', isEnabled);
   updateIcon(isEnabled);
+});
+
+chrome.commands.onCommand.addListener((command) => {
+    if (command === "take_manual_screenshot") {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            const activeTab = tabs[0];
+            if (activeTab) {
+                // Capture the visible tab directly
+                chrome.tabs.captureVisibleTab(null, { format: 'png' }, (dataUrl) => {
+                    if (chrome.runtime.lastError || !dataUrl) {
+                        console.error('Failed to capture screenshot:', chrome.runtime.lastError ? chrome.runtime.lastError.message : 'Unknown error');
+                    } else {
+                        const url = activeTab.url;
+                        const domain = new URL(url).hostname;
+                        console.log('Taking manual screenshot for URL:', url);
+                        saveScreenshot(dataUrl, domain, url); // Save the screenshot directly
+                    }
+                });
+            } else {
+                console.error('No active tab found.');
+            }
+        });
+    }
 });
